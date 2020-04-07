@@ -1,7 +1,7 @@
 from flask import Flask
 from datastore import db
 from flask_restful import Api
-from handlers import Sample, Home, Login, Register, PHCDashboard, UploadCSV, Logout
+from handlers import Sample, Home, Login, Register, PHCDashboard, UploadCSV, Logout, Reports, Output
 from models import *
 
 
@@ -30,6 +30,8 @@ def _init_routes():
     api.add_resource(PHCDashboard, "/phcdashboard", methods=["GET"])
     api.add_resource(UploadCSV, "/uploadcsv", methods=["GET", "POST"])
     api.add_resource(Logout, "/logout", methods=["GET"])
+    api.add_resource(Reports,"/reports",methods=["GET"])
+    api.add_resource(Output,"/output/<path:path>",methods=["GET"])
 
 
 if __name__ == "__main__":
