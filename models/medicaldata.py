@@ -17,3 +17,8 @@ class medicaldata(db.Model):
     Age=db.Column(db.Integer)
     NoOfCases=db.Column(db.Integer, default=1, nullable=False)
 
+class reports(db.Model):
+    __tablename__='reports'
+    id=db.Column(db.Integer,primary_key=True,autoincrement=True)
+    ReportTime=db.Column(db.DateTime,nullable=False)
+    ReportLoc=db.Column(db.String(1000),nullable=False)
