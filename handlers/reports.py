@@ -1,5 +1,8 @@
 from flask_restful import Resource
 from flask import render_template, make_response, send_from_directory, redirect, request
+from models import PHCUser,medicaldata
+from datastore import db
+from datetime import datetime
 
 class Reports(Resource):
     def get(self):
@@ -8,4 +11,10 @@ class Reports(Resource):
 
 class Output(Resource):
     def get(self,path):
-        return send_from_directory('',path)
+        headers = {'Content-Type': 'text/html'}
+        if("reports/" in path):
+            print(path)
+            return send_from_directory('',path)
+        else:
+            return make_response(render_template('error.html', errormsg="Access Denied"),200,headers)
+        
