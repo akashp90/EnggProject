@@ -14,7 +14,7 @@ from handlers.dump_to_database import DumpToDatabase
 import pandas as pd
 
 ALLOWED_EXTENSIONS = {"csv"}
-MANDATORY_COLUMN_NAMES = ["disease", "no_of_patients", "date", "location"]
+MANDATORY_COLUMN_NAMES = ["Date", "Disease", "Age"]
 
 
 def allowed_file(filename):
@@ -49,7 +49,7 @@ class UploadCSV(Resource):
             file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
             if validate_csv(file, filename, MANDATORY_COLUMN_NAMES):
                 DumpToDatabase.dump_to_database(
-                    filename, table_name="district_healthcare_report"
+                    filename, table_name="medicaldata"
                 )
                 return redirect(url_for("phcdashboard"))
             else:

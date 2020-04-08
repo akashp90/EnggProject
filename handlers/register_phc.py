@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import render_template, make_response, request, redirect, url_for
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators, SelectField
+from wtforms import Form, StringField, IntegerField, TextAreaField, PasswordField, validators, SelectField
 from passlib.hash import sha256_crypt
 from models import PHCUser
 from datastore import db
@@ -8,7 +8,7 @@ from datastore import db
 class RegisterForm(Form):
         name = StringField('Name', [validators.Length(min=1, max=50)])
         username = StringField('Username', [validators.Length(min=4, max = 25)])
-        location = StringField('Location', [validators.Length(min=3, max = 25)])
+        location = IntegerField('Centre Code (provided to you)', [validators.DataRequired()])
         password = PasswordField('Password', [validators.DataRequired(), 
             validators.EqualTo('confirm', 
             message = 'Passwords do not match')])
