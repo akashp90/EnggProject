@@ -1,7 +1,7 @@
 import pandas as pd
 from flask import current_app
 import os
-from models import DistrictHealthcareReport
+from models import medicaldata
 from datastore import db
 
 
@@ -9,7 +9,9 @@ class DumpToDatabase:
     @classmethod
     def dump_to_database(cls, filename, table_name):
         df = pd.read_csv(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
-        if table_name == "district_healthcare_report":
+        print("Failed")
+        
+        if table_name == "null":
             for i in range(0, len(df)):
                 row = df.iloc[i, :]
                 disease = row["disease"]
