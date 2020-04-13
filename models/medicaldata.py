@@ -22,3 +22,13 @@ class reports(db.Model):
     id=db.Column(db.Integer,primary_key=True,autoincrement=True)
     ReportTime=db.Column(db.DateTime,nullable=False)
     ReportLoc=db.Column(db.String(1000),nullable=False)
+    Algorithm=db.Column(db.String(300))
+
+class predictions(db.Model):
+    __tablename__='predictions'
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Disease=db.Column(db.String(300),nullable=False) #Which disease prediction
+    AgeGroup=db.Column(db.String(20),nullable=False) #Age groups = 1-20, 20-40, 40-60, 60-80, 80+
+    CentreCode=db.Column(db.Integer,nullable=False)  #Centre code from centreloc table
+    NoOfCases=db.Column(db.Integer,nullable=False)   #Predicted no.of cases for Disease and age group for centre
+    Date=db.Column(db.DateTime)                      #Date/Start date of week for which prediction is made
