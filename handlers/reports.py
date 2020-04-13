@@ -3,6 +3,7 @@ from flask import render_template, make_response, send_from_directory, redirect,
 from models import PHCUser,medicaldata,reports,centreloc
 from datastore import db
 from datetime import datetime
+from handlers.generate_pred_report import *
 
 class Reports(Resource):
     def get(self):
@@ -27,8 +28,8 @@ class Output(Resource):
             return send_from_directory('',path)
         else:
             return make_response(render_template('error.html', errormsg="Access Denied"),200,headers)
-        
 
-def generate_report():
-    
-    print("Report Generated")
+
+def generate_report():    
+    gen_pred()
+    gen_report()
