@@ -33,6 +33,7 @@ def _init_routes():
     api.add_resource(Logout, "/logout", methods=["GET"])
     api.add_resource(Reports,"/reports",methods=["GET"])
     api.add_resource(Output,"/output/<path:path>",methods=["GET"])
+    api.add_resource(GenRep,"/gen",methods=["GET"])
 
    
 
