@@ -3,7 +3,8 @@ from flask import render_template, make_response, send_from_directory, redirect,
 from models import PHCUser,medicaldata,reports,centreloc
 from datastore import db
 from datetime import datetime
-from handlers.generate_pred_report import *
+from handlers.generate_report import *
+from handlers.generate_prediction import *
 
 class Reports(Resource):
     def get(self):
