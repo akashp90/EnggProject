@@ -17,9 +17,10 @@
     <h1>Available Reports</h1>
     {% if reports %}
     <table style="border:solid black 1px; margin:10px;"><tbody>
-        <tr style="border:solid black 1px;padding:0px;"><th style="border:solid black 1px;padding:8px 16px 8px 16px; text-align: center;">Report Date</th><th style="border:solid black 1px;padding:8px 16px 8px 16px; text-align: center;">Report Link</th></tr>
+        <tr style="border:solid black 1px;padding:0px;"><th style="border:solid black 1px;padding:8px 16px 8px 16px; text-align: center;">Report Date</th><th style="border:solid black 1px;padding:8px 16px 8px 16px; text-align: center;">Report Link</th>
+        <th style="border:solid black 1px;padding:8px 16px 8px 16px; text-align: center;">Prediction Algorithm</th></tr>
     {% for report in reports %}
-        <tr style="border:none;padding:0px;"><td style="border:none; border-right:solid 1px black; padding:0px 16px 0px 16px;">{{report.ReportTime}}</td><td style="border:none;padding:0px 16px 0px 16px;"><a href="/output{{report.ReportLoc}}" style="text-decoration: none;">{{report.ReportName}}</a></td></tr>
+        <tr style="border:none;padding:0px;"><td style="border:none; border-right:solid 1px black; padding:0px 16px 0px 16px;">{{report.ReportTime}}</td><td style="border:none;padding:0px 16px 0px 16px;"><a href="/output{{report.ReportLoc}}" style="text-decoration: none;">{{report.ReportName}}</a></td><td style="border:none;padding:0px 16px 0px 16px;">{{report.AlgorithmName}}</td></tr>
     {% endfor %}
     </tbody></table>
     {% else %}
