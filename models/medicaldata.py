@@ -23,6 +23,14 @@ class reports(db.Model):
     ReportTime=db.Column(db.DateTime,nullable=False)
     ReportLoc=db.Column(db.String(1000),nullable=False)
     Algorithm=db.Column(db.String(300))
+    
+class algorithms(db.Model):
+    __tablename__='algorithms'
+    id=db.Column(db.Integer,primary_key=True,autoincrement=True)
+    AlgorithmName=db.Column(db.String(100),nullable=False)
+    AlgorithmLoc = db.Column(db.String(1000),nullable=False)
+    DefaultAlgorithm = db.Column(db.Boolean,nullable=False, default=False)
+    Accuracy = db.Column(db.String(20))
 
 class predictions(db.Model):
     __tablename__='predictions'
@@ -32,3 +40,4 @@ class predictions(db.Model):
     CentreCode=db.Column(db.Integer,nullable=False)  #Centre code from centreloc table
     NoOfCases=db.Column(db.Integer,nullable=False)   #Predicted no.of cases for Disease and age group for centre
     Date=db.Column(db.DateTime)                      #Date/Start date of week for which prediction is made
+    AlgorithmName = db.Column(db.String(100),nullable=False)
