@@ -41,3 +41,76 @@ class predictions(db.Model):
     NoOfCases=db.Column(db.Integer,nullable=False)   #Predicted no.of cases for Disease and age group for centre
     Date=db.Column(db.DateTime)                      #Date/Start date of week for which prediction is made
     AlgorithmName = db.Column(db.String(100),nullable=False)
+    
+class Diarrhea(db.Model):
+    __tablename__="Diarrhea"
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    EntryTime=db.Column(db.DateTime)
+    CentreCode=db.Column(db.Integer,nullable=False)
+    Disease=db.Column(db.String(300),nullable=False)
+    Age=db.Column(db.Integer)
+    NoOfCases=db.Column(db.Integer, default=1, nullable=False)
+    
+class Diarrhea_Pred(db.Model):
+    __tablename__="Diarrhea_Pred"
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    EntryTime=db.Column(db.DateTime)
+    CentreCode=db.Column(db.Integer,nullable=False)
+    Disease=db.Column(db.String(300),nullable=False)
+    Age=db.Column(db.Integer)
+    NoOfCases=db.Column(db.Integer, default=1, nullable=False)
+    
+class Gastroenteritis(db.Model):
+    __tablename__="Gastroenteritis"
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    EntryTime=db.Column(db.DateTime)
+    CentreCode=db.Column(db.Integer,nullable=False)
+    Disease=db.Column(db.String(300),nullable=False)
+    Age=db.Column(db.Integer)
+    NoOfCases=db.Column(db.Integer, default=1, nullable=False)
+    
+class Gastroenteritis_Pred(db.Model):
+    __tablename__="Gastroenteritis_Pred"
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    EntryTime=db.Column(db.DateTime)
+    CentreCode=db.Column(db.Integer,nullable=False)
+    Disease=db.Column(db.String(300),nullable=False)
+    Age=db.Column(db.Integer)
+    NoOfCases=db.Column(db.Integer, default=1, nullable=False)
+
+class Typhoid(db.Model):
+    __tablename__="Typhoid"
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    EntryTime=db.Column(db.DateTime)
+    CentreCode=db.Column(db.Integer,nullable=False)
+    Disease=db.Column(db.String(300),nullable=False)
+    Age=db.Column(db.Integer)
+    NoOfCases=db.Column(db.Integer, default=1, nullable=False)
+    
+class Typhoid_Pred(db.Model):
+    __tablename__="Typhoid_Pred"
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    EntryTime=db.Column(db.DateTime)
+    CentreCode=db.Column(db.Integer,nullable=False)
+    Disease=db.Column(db.String(300),nullable=False)
+    Age=db.Column(db.Integer)
+    NoOfCases=db.Column(db.Integer, default=1, nullable=False)
+    
+class Shigellosis(db.Model):
+    __tablename__="Shigellosis"
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    EntryTime=db.Column(db.DateTime)
+    CentreCode=db.Column(db.Integer,nullable=False)
+    Disease=db.Column(db.String(300),nullable=False)
+    Age=db.Column(db.Integer)
+    NoOfCases=db.Column(db.Integer, default=1, nullable=False)
+    
+class Shigellosis(db.Model):
+    __tablename__="Shigellosis_Pred"
+    id=db.Column(db.Integer, primary_key=True, autoincrement=True)
+    EntryTime=db.Column(db.DateTime)
+    CentreCode=db.Column(db.Integer,nullable=False)
+    Disease=db.Column(db.String(300),nullable=False)
+    Age=db.Column(db.Integer)
+    NoOfCases=db.Column(db.Integer, default=1, nullable=False)
+    
