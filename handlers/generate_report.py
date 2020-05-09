@@ -381,8 +381,8 @@ def gen_report(launch_method='auto',algorithm=None):
             rep=reports(ReportTime=currtime,ReportLoc=filename)
         else:
             rep=reports(ReportTime=currtime,ReportLoc=filename,Algorithm=algorithm)
-        #db.session.add(rep)
-        #db.session.commit()
+        db.session.add(rep)
+        db.session.commit()
     except FileExistsError as e:
         print("File Exists",e)
     print("Reports generated")

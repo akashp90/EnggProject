@@ -32,18 +32,9 @@
                 </p>
                 <button onClick="window.location.href = '/gen?algo={{item.AlgorithmName}}';">Generate Report</button>
                 <button onClick="window.location.href = '/reports?algo={{item.AlgorithmName}}';">View Reports</button>
+                <button onClick="window.location.href = '#';">Make Default</button>
             </div>
             {%endfor%}
-            <div style="width:95%; margin-bottom:15px; padding:10px; padding-left: 20px; border-radius: 6px; background-color: #DDEEEE;">
-                <h4>Controls</h4>
-                <button onClick="document.getElementById('predictor_algorithm').style.display='block';">Add Predictor Algorithm</button>
-                <div id="predictor_algorithm" style='display:none;'>
-                    <input type='file' placeholder="Algorithm training"></input>
-                    <input type='text' placeholder="Algorithm Name"></input>
-                    <input type='text' placeholder="Accuracy"></input>
-            
-                
-                </div>
             </div>
         </div>
         <div class="col-lg-2"></div>
