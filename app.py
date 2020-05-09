@@ -24,7 +24,6 @@ def _init_db(app):
 
 def _init_routes():
     api = Api(app)
-    api.add_resource(Sample, "/sample", methods=["GET"])
     api.add_resource(Home, "/", methods=["GET"])
     api.add_resource(Login, "/login", methods=["GET", "POST"])
     api.add_resource(Register, "/register", methods=["GET", "POST"])
@@ -35,7 +34,6 @@ def _init_routes():
     api.add_resource(Output,"/output/<path:path>",methods=["GET"])
     api.add_resource(GenRep,"/gen",methods=["GET"])
     api.add_resource(Algo,"/algo",methods=["GET"])
-    api.add_resource(DiseaseHandler,"/disease", methods=["GET","POST"])
 
    
 
