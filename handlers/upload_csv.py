@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 import os
 from handlers.dump_to_database import DumpToDatabase
 import pandas as pd
+import csv
 
 ALLOWED_EXTENSIONS = {"csv"}
 MANDATORY_COLUMN_NAMES = ["Date", "Disease", "Age"]
@@ -33,6 +34,7 @@ def validate_csv(file, filename, mandatory_column_names):
 
 class UploadCSV(Resource):
     def get(self):
+        
         headers = {"Content-Type": "text/html"}
         return make_response(render_template("upload_csv.html"), 200, headers)
 

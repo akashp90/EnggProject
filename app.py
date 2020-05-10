@@ -34,6 +34,7 @@ def _init_routes():
     api.add_resource(Output,"/output/<path:path>",methods=["GET"])
     api.add_resource(GenRep,"/gen",methods=["GET"])
     api.add_resource(Algo,"/algo",methods=["GET"])
+    api.add_resource(DownloadTemplate,"/download_template", methods=["GET","POST"])
 
    
 
