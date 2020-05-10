@@ -5,15 +5,15 @@ from handlers import *
 from models import *
 from apscheduler.schedulers.background import BackgroundScheduler
 
+
 def _init_app():
     app = Flask(__name__)
     app.config.from_pyfile("config.py")
     app.secret_key = "secret123"
     return app
 
-   
-app = _init_app()
 
+app = _init_app()
 
 
 def _init_db(app):
@@ -38,13 +38,13 @@ def _init_routes():
     api.add_resource(PHCDashboard, "/phcdashboard", methods=["GET"])
     api.add_resource(UploadCSV, "/uploadcsv", methods=["GET", "POST"])
     api.add_resource(Logout, "/logout", methods=["GET"])
-    api.add_resource(Reports,"/reports",methods=["GET"])
-    api.add_resource(Output,"/output/<path:path>",methods=["GET"])
-    api.add_resource(GenRep,"/gen",methods=["GET"])
-    api.add_resource(Algo,"/algo",methods=["GET"])
-    api.add_resource(DownloadTemplate,"/download_template", methods=["GET","POST"])
+    api.add_resource(Reports, "/reports", methods=["GET"])
+    api.add_resource(Output, "/output/<path:path>", methods=["GET"])
+    api.add_resource(GenRep, "/gen", methods=["GET"])
+    api.add_resource(Algo, "/algo", methods=["GET"])
+    api.add_resource(DownloadTemplate, "/download_template", methods=["GET", "POST"])
+    api.add_resource(Admin, "/admin", methods=["GET", "POST"])
 
-   
 
 if __name__ == "__main__":
     scheduler = BackgroundScheduler(daemon=True)
@@ -53,6 +53,3 @@ if __name__ == "__main__":
     _init_routes()
     _init_db(app)
     app.run(debug=True)
-    
-
-

@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<br>
 <div class="jumbotron text-center">
     <h1>Welcome to Epidemic prediction. Please login</h1>
-    <button id="myButton" class="float-centre submit-button">Register</button>
-
+      <button type="button"  id="myButton" class="btn btn-primary">Register</button>
     <script type="text/javascript">
         document.getElementById("myButton").onclick = function () {
             location.href = "/register";
