@@ -12,9 +12,12 @@ class DownloadTemplate(Resource):
     def post(self):
         disease_name = request.form['disease_name']
         column_names = []
-        print(disease_name)
         if disease_name == 'Diarrhea':
             column_names = Diarrhea.__table__.columns.keys()
+            column_names.remove('id')
+            column_names.remove('CentreCode')
+        # TODO Add support for more diseases
+        
         if len(column_names) == 0:
             error = "Disease not supported yet"
             headers = {'Content-Type': 'text/html'}
