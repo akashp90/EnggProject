@@ -8,7 +8,7 @@ from datastore import db
 class RegisterForm(Form):
         name = StringField('Name', [validators.Length(min=1, max=50)])
         username = StringField('Username', [validators.Length(min=4, max = 25)])
-        location = IntegerField('Centre Code (provided to you)', [validators.DataRequired()])
+        location = StringField('Centre Code (provided to you)', [validators.DataRequired()])
         password = PasswordField('Password', [validators.DataRequired(), 
             validators.EqualTo('confirm', 
             message = 'Passwords do not match')])
@@ -25,7 +25,7 @@ class Register(Resource):
         location = form.location.data
         username = form.username.data
         password = sha256_crypt.encrypt(str(form.password.data))
-        phc_user = PHCUser(name=name, username=username, location=location, password=password)
+        phc_user = PHCUser(name=name, username=username, location=int(location), password=password)
         db.session.add(phc_user)
         db.session.commit()
         return redirect(url_for('login'))

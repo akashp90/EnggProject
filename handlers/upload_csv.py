@@ -12,9 +12,14 @@ from werkzeug.utils import secure_filename
 import os
 from handlers.dump_to_database import DumpToDatabase
 import pandas as pd
+import csv
 
 ALLOWED_EXTENSIONS = {"csv"}
-MANDATORY_COLUMN_NAMES = ["Date", "Disease", "Age"]
+
+def get_mandatory_column_names_for_disease(disease):
+    if disease == 'DIARRHEA':
+        return ['EntryTime','Age', 'NoOfCases']
+    return
 
 
 def allowed_file(filename):
@@ -24,6 +29,7 @@ def allowed_file(filename):
 
 
 def validate_csv(file, filename, mandatory_column_names):
+    # TODO Validate filename, see if it is in the correct format that we need 
     df = pd.read_csv(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
     column_names = df.columns.values
     if column_names.sort() == mandatory_column_names.sort():
@@ -47,9 +53,11 @@ class UploadCSV(Resource):
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
-            if validate_csv(file, filename, MANDATORY_COLUMN_NAMES):
+            disease = filename.split('_')[0]
+            mandatory_column_names = get_mandatory_column_names_for_disease(disease)
+            if validate_csv(file, filename, mandatory_column_names):
                 DumpToDatabase.dump_to_database(
-                    filename, table_name="medicaldata"
+                    filename, table_name=disease
                 )
                 return redirect(url_for("phcdashboard"))
             else:

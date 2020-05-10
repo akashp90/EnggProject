@@ -1,12 +1,12 @@
 import pandas as pd
 from flask import current_app, session
 import os
-from models import medicaldata, PHCUser
+from models import medicaldata, PHCUser, Diarrhea, Location
 from datastore import db
 from datetime import datetime
 
 class DumpToDatabase:
-    @classmethod
+    """@classmethod
     def dump_to_database(cls, filename, table_name):
         df = pd.read_csv(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
         if(session['username']):
@@ -35,5 +35,24 @@ class DumpToDatabase:
                     else:
                         print("Invalid Format/Column Names. Use Date, Disease, Age, NoOfPatients as Column Names.")
             else:
-                print("User Not logged in")
+                print("User Not logged in")"""
+
+    @classmethod 
+    def dump_to_database(cls, filename, table_name):
+        df = pd.read_csv(os.path.join(current_app.config["UPLOAD_FOLDER"], filename))
+        if session['username']:
+            user=PHCUser.query.filter_by(username=session['username']).first()
+            location_object = Location.query.filter_by(id=user.location).first()
+            location = location_object.id
+            if table_name == 'DIARRHEA':
+                vals = df.values
+                print(vals)
+                for i in vals:
+                    #TODO validate data before saving
+                    diarrhea = Diarrhea(EntryTime = i[0], CentreCode= location, Age=i[1], NoOfCases=i[2])
+                    db.session.add(diarrhea)
+                    db.session.commit()
+        else:
+            print("user not logged in ")
+
 

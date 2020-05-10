@@ -126,3 +126,8 @@ dmypy.json
 
 .vscode/
 .github/
+
+# Other stuff
+
+.pyc
+test1.db
