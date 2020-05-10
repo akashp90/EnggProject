@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import render_template, make_response, send_from_directory, redirect, request
-from models import PHCUser,medicaldata,reports,centreloc,algorithms
+from models import PHCUser,medicaldata,reports,algorithms
 from datastore import db
 from datetime import datetime
 from handlers.generate_report import *

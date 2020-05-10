@@ -126,8 +126,9 @@ dmypy.json
 
 .vscode/
 .github/
+.gitconfig
 
 # Other stuff
 
 .pyc
-test1.db
+
