@@ -2,9 +2,15 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import MinMaxScaler
+from tensorflow.keras.models import load_model
 from joblib import dump, load
+from models import Diseases
 
 def LSTM_Aditya():
+    diseases=Diseases.query.all()
+    print(diseases)
+    #model = load_model()
     print("In LSTM")
     
 def MLP_Aditya():

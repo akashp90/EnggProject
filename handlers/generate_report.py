@@ -16,6 +16,12 @@ def gen_report(launch_method='auto',algorithm=None):
         filename="""\\reports\\"""+currtime.strftime("%Y-%m-%d_%H-%M-%S")+"_custom.html"
     dir=dir+filename
     print(dir)
+    #delete and recombine databases
+    db.engine.execute("""DELETE FROM medicaldata;""")
+    tempdf=pd.read_sql("""SELECT Disease FROM diseases;""",db.engine)
+    for i in tempdf.values:
+        db.engine.execute("""INSERT INTO medicaldata(EntryTime,CentreCode,Disease,Age,NoOfCases) SELECT EntryTime,CentreCode,Disease,Age,NoOfCases FROM """+i[0]+""";""")
+    
     #data loading
     lastweek=currtime-timedelta(currtime.weekday())-timedelta(weeks=1,days=1)
     lastweek=datetime.strptime(lastweek.strftime("%Y %m %d 00 00 00"),"%Y %m %d %H %M %S")
@@ -30,7 +36,7 @@ def gen_report(launch_method='auto',algorithm=None):
         last4wkstartdt.append(last4wk+timedelta(weeks=i))
     df5=pd.read_sql("""SELECT STRFTIME("%Y-%m-%d",EntryTime) as ETime, Disease, sum(NoOfCases) as Count FROM medicaldata WHERE  EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+last4wk.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY ETime,Disease ORDER BY ETime, Disease""",db.engine)
     df6=pd.read_sql("""SELECT STRFTIME("%Y-%m-%d",m.EntryTime) as ETime, c.District, m.Disease, sum(m.NoOfCases) as Count FROM medicaldata m, centreloc c WHERE m.CentreCode=c.CentreCode AND m.EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND m.EntryTime>='"""+last4wk.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY ETime, c.District, m.Disease ORDER BY ETime, c.District, m.Disease""",db.engine)
-    print(df6)
+    
    
     lastwkstart=lastweek-timedelta(weeks=1)
     df7=pd.read_sql("""SELECT sum(NoOfCases) as Count FROM medicaldata WHERE EntryTime<='"""+lastweek.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+lastwkstart.strftime("%Y-%m-%d %H:%M:%S")+"""'""",db.engine)
@@ -266,7 +272,7 @@ def gen_report(launch_method='auto',algorithm=None):
     df2=df2.drop(labels='Sum', axis=1)
     df2=df2.reindex(df2.sum().sort_values(ascending=False).index, axis=1)
     df2=df2.iloc[:,0:10]
-    print(df2)
+    
     str1+="""   var centrewise_top10_dist_data = new google.visualization.DataTable();
                 centrewise_top10_dist_data.addColumn('string','Region');"""
     for i in df2.columns.values:
@@ -285,7 +291,7 @@ def gen_report(launch_method='auto',algorithm=None):
     df5=df5.fillna(0)
     df5=df5.reindex(df5.sum().sort_values(ascending=False).index, axis=1)
     df5=df5.iloc[:,0:10]
-    print(df5)
+    
     for i in df5.columns.values:
         str1+="""x4week_trendline_data.addColumn('number','"""+i[1]+"""');"""
     for i in range(len(df5.index.values)):
@@ -299,9 +305,9 @@ def gen_report(launch_method='auto',algorithm=None):
     last8wkdt=[]
     for i in range(0,56):
         last8wkdt.append(last8wk+timedelta(days=i))
-    print(last8wkdt)
+    
     dfmain=pd.DataFrame()
-    print(dfmain)
+    
     for i in range(len(last8wkdt)):
         df6=pd.read_sql("""SELECT c.District, STRFTIME("%Y-%m-%d",m.EntryTime) as ETime, m.Disease, sum(m.NoOfCases) as Count FROM medicaldata m, centreloc c WHERE m.CentreCode=c.CentreCode AND ETime='"""+last8wkdt[i].strftime("%Y-%m-%d")+"""' GROUP BY c.District, m.Disease ORDER BY c.District, m.Disease""",db.engine)
         df6=df6.drop('ETime',axis=1)
@@ -313,7 +319,7 @@ def gen_report(launch_method='auto',algorithm=None):
         df6.insert(loc=len(df6.columns),column='ETime',value=dates)
         dfmain=pd.concat([dfmain,df6])
         dfmain=dfmain.fillna(0)    
-        print(dfmain.values)
+        
     str1+="""   var centrewise_all_dashboard_data = new google.visualization.DataTable();
                 centrewise_all_dashboard_data.addColumn('date','Date');
                 centrewise_all_dashboard_data.addColumn('string','District');"""
@@ -322,7 +328,6 @@ def gen_report(launch_method='auto',algorithm=None):
     for i in range(len(dfmain.values)):
         str1+="""centrewise_all_dashboard_data.addRow([new Date('"""+str(dfmain.values[i][-1])+"""T00:00:00+05:30'),'"""+str(dfmain.index[i])+"""'"""
         for j in range(0,len(dfmain.values[i])-1):
-            print(dfmain.values[i][j])
             str1+=""","""+str(round(dfmain.values[i][j],0))
         str1+="""]);"""
 
@@ -364,14 +369,13 @@ def gen_report(launch_method='auto',algorithm=None):
     var centrewise_all_dist_timefilter = new google.visualization.ControlWrapper({'controlType':'DateRangeFilter', 'containerId':'centrewise_all_dist_timefilter','options':{'filterColumnLabel':'Date','ui':{'label':'Choose a Time Frame'}}});
     centrewise_all_dashboard.bind([centrewise_all_dist_filter,centrewise_all_dist_timefilter],centrewise_all_dist_chart);
     centrewise_all_dashboard.draw(centrewise_all_dashboard_data);"""
-    print(str1)
     str1+="""  }
     
             </script>"""
     #Ending of HTML Page
     str1+="""</body>
              </html>"""
-
+    print(db.engine.execute("""SELECT count(*) FROM Diarrhea;""").fetchall())
     #file store and add to db
     try:
         fd=open(dir,'w')
