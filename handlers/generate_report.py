@@ -2,11 +2,11 @@ import os
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
-from models import reports
+from models import reports,algorithms
 from datastore import db
 
 
-def gen_report(launch_method='auto',algorithm=None):
+def gen_report(launch_method='auto',al=None):
     dir=os.getcwd()
     if(launch_method=='auto'):
         currtime=datetime.strptime(datetime.now().strftime("%Y %m %d 00 00 00"),"%Y %m %d %H %M %S")
@@ -21,6 +21,11 @@ def gen_report(launch_method='auto',algorithm=None):
     tempdf=pd.read_sql("""SELECT Disease FROM diseases;""",db.engine)
     for i in tempdf.values:
         db.engine.execute("""INSERT INTO medicaldata(EntryTime,CentreCode,Disease,Age,NoOfCases) SELECT EntryTime,CentreCode,Disease,Age,NoOfCases FROM """+i[0]+""";""")
+        db.engine.execute("""INSERT INTO medicaldata_pred(EntryTime,CentreCode,Disease,NoOfCases) SELECT EntryTime,CentreCode,'"""+i[0]+"""' as Disease,NoOfCases FROM """+i[0]+"""_Pred;""")
+    
+    if(al==None):
+        al1=algorithms.query.filter_by(DefaultAlgorithm=1).first()
+        algorithm=al1.AlgorithmName
     
     #data loading
     lastweek=currtime-timedelta(currtime.weekday())-timedelta(weeks=1,days=1)

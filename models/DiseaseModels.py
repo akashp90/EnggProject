@@ -14,7 +14,6 @@ class Diarrhea_Pred(db.Model):
     id=db.Column(db.Integer, primary_key=True, autoincrement=True)
     EntryTime=db.Column(db.DateTime)
     CentreCode=db.Column(db.Integer,  ForeignKey('locations.id'), nullable=False)
-    Age=db.Column(db.Integer)
     NoOfCases=db.Column(db.Integer, default=1, nullable=False)
    
 class Gastroenteritis(db.Model):
@@ -30,7 +29,6 @@ class Gastroenteritis_Pred(db.Model):
     id=db.Column(db.Integer, primary_key=True, autoincrement=True)
     EntryTime=db.Column(db.DateTime)
     CentreCode=db.Column(db.Integer,  ForeignKey('locations.id'), nullable=False)
-    Age=db.Column(db.Integer)
     NoOfCases=db.Column(db.Integer, default=1, nullable=False)
 
 class Dengue(db.Model):
@@ -46,7 +44,6 @@ class Dengue_Pred(db.Model):
     id=db.Column(db.Integer, primary_key=True, autoincrement=True)
     EntryTime=db.Column(db.DateTime)
     CentreCode=db.Column(db.Integer,  ForeignKey('locations.id'), nullable=False)
-    Age=db.Column(db.Integer)
     NoOfCases=db.Column(db.Integer, default=1, nullable=False)
    
     
@@ -63,7 +60,6 @@ class Typhoid_Pred(db.Model):
     id=db.Column(db.Integer, primary_key=True, autoincrement=True)
     EntryTime=db.Column(db.DateTime)
     CentreCode=db.Column(db.Integer,  ForeignKey('locations.id'), nullable=False)
-    Age=db.Column(db.Integer)
     NoOfCases=db.Column(db.Integer, default=1, nullable=False)
     
 class Shigellosis(db.Model):
@@ -79,6 +75,5 @@ class Shigellosis_Pred(db.Model):
     id=db.Column(db.Integer, primary_key=True, autoincrement=True)
     EntryTime=db.Column(db.DateTime)
     CentreCode=db.Column(db.Integer,  ForeignKey('locations.id'), nullable=False)
-    Age=db.Column(db.Integer)
     NoOfCases=db.Column(db.Integer, default=1, nullable=False)
     

@@ -7,3 +7,4 @@ class PHCUser(db.Model):
     username = db.Column(db.String)
     location = db.Column(db.Integer, ForeignKey('locations.id'), nullable=False)
     password = db.Column(db.String(100))
+    permission = db.Column(db.String(10),default='User')
