@@ -53,6 +53,18 @@ class Algo(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('commanderconsole.html',algolist=alist),200,headers)
 
-def generate_report(algorithm=None,launch_method='auto'):    
-    gen_pred("LSTM",launch_method)
-    #gen_report(launch_method,algorithm)
+def generate_report(algorithm=None,launch_method='auto'):  
+    if (algorithm==None):
+        al=algorithms.query.filter_by(DefaultAlgorithm=True).first()
+        al=al.AlgorithmName
+    else:
+        al=algorithm
+    al1=algorithms.query.all()
+    flag=0
+    for i in al1:
+        if(i.AlgorithmName==al):
+            flag=1
+    if(flag==0):
+        raise Exception("Algorithm does not exist")
+    gen_pred(al,launch_method)
+    gen_report(launch_method,al)

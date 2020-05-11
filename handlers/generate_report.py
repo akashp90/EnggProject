@@ -18,21 +18,19 @@ def gen_report(launch_method='auto',al=None):
     print(dir)
     #delete and recombine databases
     db.engine.execute("""DELETE FROM medicaldata;""")
-    tempdf=pd.read_sql("""SELECT Disease FROM diseases;""",db.engine)
-    for i in tempdf.values:
-        db.engine.execute("""INSERT INTO medicaldata(EntryTime,CentreCode,Disease,Age,NoOfCases) SELECT EntryTime,CentreCode,Disease,Age,NoOfCases FROM """+i[0]+""";""")
+    db.engine.execute("""DELETE FROM medicaldata_pred;""")
+    disdf=pd.read_sql("""SELECT Disease FROM diseases;""",db.engine)
+    for i in disdf.values:
+        db.engine.execute("""INSERT INTO medicaldata(EntryTime,CentreCode,Disease,Age,NoOfCases) SELECT EntryTime,CentreCode, '"""+i[0]+"""' as Disease, Age,NoOfCases FROM """+i[0]+""";""")
         db.engine.execute("""INSERT INTO medicaldata_pred(EntryTime,CentreCode,Disease,NoOfCases) SELECT EntryTime,CentreCode,'"""+i[0]+"""' as Disease,NoOfCases FROM """+i[0]+"""_Pred;""")
-    
-    if(al==None):
-        al1=algorithms.query.filter_by(DefaultAlgorithm=1).first()
-        algorithm=al1.AlgorithmName
+   
     
     #data loading
     lastweek=currtime-timedelta(currtime.weekday())-timedelta(weeks=1,days=1)
     lastweek=datetime.strptime(lastweek.strftime("%Y %m %d 00 00 00"),"%Y %m %d %H %M %S")
     print("Lastweek:",lastweek)
     df=pd.read_sql("""SELECT Disease, sum(NoOfCases) as Count from medicaldata WHERE EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+lastweek.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY Disease ORDER BY sum(NoOfCases) DESC""",db.engine)
-    df2=pd.read_sql("""SELECT c.District, m.Disease, sum(m.NoOfCases) as Count FROM medicaldata m, centreloc c WHERE m.CentreCode=c.CentreCode AND m.EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+lastweek.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY c.District, m.Disease ORDER BY c.District, m.Disease""",db.engine)
+    df2=pd.read_sql("""SELECT c.district as District, m.Disease, sum(m.NoOfCases) as Count FROM medicaldata m, locations c WHERE m.CentreCode=c.id AND m.EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+lastweek.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY c.district, m.Disease ORDER BY c.district, m.Disease""",db.engine)
     df3=pd.read_sql("""SELECT Age, count(Age)*NoOfCases as Count FROM medicaldata WHERE EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+lastweek.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY Age ORDER BY Age""",db.engine)
     df4=pd.read_sql("""SELECT sum(NoOfCases) as Count FROM medicaldata WHERE EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+lastweek.strftime("%Y-%m-%d %H:%M:%S")+"""'""",db.engine)
     last4wk=currtime-timedelta(currtime.weekday())-timedelta(weeks=4,days=1)
@@ -40,7 +38,7 @@ def gen_report(launch_method='auto',al=None):
     for i in range(0,4):
         last4wkstartdt.append(last4wk+timedelta(weeks=i))
     df5=pd.read_sql("""SELECT STRFTIME("%Y-%m-%d",EntryTime) as ETime, Disease, sum(NoOfCases) as Count FROM medicaldata WHERE  EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+last4wk.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY ETime,Disease ORDER BY ETime, Disease""",db.engine)
-    df6=pd.read_sql("""SELECT STRFTIME("%Y-%m-%d",m.EntryTime) as ETime, c.District, m.Disease, sum(m.NoOfCases) as Count FROM medicaldata m, centreloc c WHERE m.CentreCode=c.CentreCode AND m.EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND m.EntryTime>='"""+last4wk.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY ETime, c.District, m.Disease ORDER BY ETime, c.District, m.Disease""",db.engine)
+    df6=pd.read_sql("""SELECT STRFTIME("%Y-%m-%d",m.EntryTime) as ETime, c.district as District, m.Disease, sum(m.NoOfCases) as Count FROM medicaldata m, locations c WHERE m.CentreCode=c.id AND m.EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND m.EntryTime>='"""+last4wk.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY ETime, c.district, m.Disease ORDER BY ETime, c.district, m.Disease""",db.engine)
     
    
     lastwkstart=lastweek-timedelta(weeks=1)
@@ -88,7 +86,7 @@ def gen_report(launch_method='auto',al=None):
     for i in agecount:
         agecountperc.append(round((i*100)/(df4.values[0][0]),1))
     #TODO Sort out statistics section and make predictions
-    df8=pd.read_sql("""SELECT c.District, sum(m.NoOfCases) as Count FROM centreloc c, medicaldata m WHERE m.CentreCode=c.CentreCode AND m.EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+lastweek.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY m.CentreCode ORDER BY Count DESC""",db.engine)
+    df8=pd.read_sql("""SELECT c.district as District, sum(m.NoOfCases) as Count FROM locations c, medicaldata m WHERE m.CentreCode=c.id AND m.EntryTime<='"""+currtime.strftime("%Y-%m-%d %H:%M:%S")+"""' AND EntryTime>='"""+lastweek.strftime("%Y-%m-%d %H:%M:%S")+"""' GROUP BY m.CentreCode ORDER BY Count DESC""",db.engine)
     str1="""<!DOCTYPE html>
             <html>
             <head>
@@ -135,10 +133,7 @@ def gen_report(launch_method='auto',al=None):
                         8. Statistic: """+str(0)+"""<br/>                        
                         </div>
                         <div class='col-lg-6'>"""
-    if(algorithm!=None):
-        str1+="""9.&nbsp; Prediction Algorithm Used: """+algorithm+""" <br/>"""
-    else:
-        str1+="""9.&nbsp;&nbsp;Statistic: """+str(0)+"""<br/>
+    str1+="""9.&nbsp; Prediction Algorithm Used: """+al+""" <br/>
                         10. Statistic: """+str(0)+""" <br/>
                         11. Statistic: """+str(0)+""" <br/>
                         12. Statistic: """+str(0)+"""<br/>
@@ -314,7 +309,7 @@ def gen_report(launch_method='auto',al=None):
     dfmain=pd.DataFrame()
     
     for i in range(len(last8wkdt)):
-        df6=pd.read_sql("""SELECT c.District, STRFTIME("%Y-%m-%d",m.EntryTime) as ETime, m.Disease, sum(m.NoOfCases) as Count FROM medicaldata m, centreloc c WHERE m.CentreCode=c.CentreCode AND ETime='"""+last8wkdt[i].strftime("%Y-%m-%d")+"""' GROUP BY c.District, m.Disease ORDER BY c.District, m.Disease""",db.engine)
+        df6=pd.read_sql("""SELECT c.district as District, STRFTIME("%Y-%m-%d",m.EntryTime) as ETime, m.Disease, sum(m.NoOfCases) as Count FROM medicaldata m, locations c WHERE m.CentreCode=c.id AND ETime='"""+last8wkdt[i].strftime("%Y-%m-%d")+"""' GROUP BY c.district, m.Disease ORDER BY c.district, m.Disease""",db.engine)
         df6=df6.drop('ETime',axis=1)
         df6=df6.pivot(index='District',columns='Disease')
         df6=df6.fillna(0)
@@ -335,7 +330,7 @@ def gen_report(launch_method='auto',al=None):
         for j in range(0,len(dfmain.values[i])-1):
             str1+=""","""+str(round(dfmain.values[i][j],0))
         str1+="""]);"""
-
+    print(dfmain)
     str1+="""var centrewise_all_dist_chart = new google.visualization.ChartWrapper({'chartType':'LineChart','containerId':'centrewise_all_dist_chart','options':{'title':'Disease Trends By Region (max. past 8 weeks)','fontSize':'10','titleTextStyle':{'color':'black','fontName':'Arial','fontSize':'16','bold':'true','italic':'false'},'hAxis':{'title':'No. of Cases'},'vAxis':{'title':'New Cases per Day'},'width':'100%','height':'400px'},'view':{'columns':[0"""
     for i in range(len(dfmain.columns)-1):
         str1+=""","""+str(i+2)
@@ -363,7 +358,7 @@ def gen_report(launch_method='auto',al=None):
         console.log("Draw");
     }
     document.getElementById("centrewise_all_dist_diseasefilter").innerHTML = '"""
-    for i in range(0,len(dfmain.columns)):
+    for i in range(0,len(dfmain.columns)-1):
         str1+="""<option>"""+dfmain.columns[i][1]+"""</option>"""
     str1+="""';
     $('.selectpicker').selectpicker('refresh');
@@ -380,18 +375,19 @@ def gen_report(launch_method='auto',al=None):
     #Ending of HTML Page
     str1+="""</body>
              </html>"""
-    print(db.engine.execute("""SELECT count(*) FROM Diarrhea;""").fetchall())
+    #db.engine.execute("""DELETE FROM medicaldata;""")
+    #db.engine.execute("""DELETE FROM medicaldata_pred;""")
     #file store and add to db
     try:
         fd=open(dir,'w')
         fd.write(str1)
         fd.close()
-        if(algorithm==None):
+        if(al==None):
             rep=reports(ReportTime=currtime,ReportLoc=filename)
         else:
-            rep=reports(ReportTime=currtime,ReportLoc=filename,Algorithm=algorithm)
-        db.session.add(rep)
-        db.session.commit()
+            rep=reports(ReportTime=currtime,ReportLoc=filename,Algorithm=al)
+        #db.session.add(rep)
+        #db.session.commit()
     except FileExistsError as e:
         print("File Exists",e)
     print("Reports generated")
