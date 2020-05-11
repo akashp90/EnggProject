@@ -54,5 +54,5 @@ class Algo(Resource):
         return make_response(render_template('commanderconsole.html',algolist=alist),200,headers)
 
 def generate_report(algorithm=None,launch_method='auto'):    
-    gen_pred("LSTM")
+    gen_pred("LSTM",launch_method)
     #gen_report(launch_method,algorithm)
