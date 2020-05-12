@@ -153,3 +153,6 @@ plt.legend()
 
 prediction_fig = fig
 fig.savefig('Prediction.png')
+
+
+print("chutiya")
