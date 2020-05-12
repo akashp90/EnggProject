@@ -60,3 +60,7 @@ Werkzeug==1.0.1
 wrapt==1.12.1
 WTForms==2.2.1
 zipp==3.1.0
+seaborn
+squarify
+plotly
+IPython
