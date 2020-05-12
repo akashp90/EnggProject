@@ -10,30 +10,56 @@
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <style>
-.footer {
-background-color: #f1f1f1;
-padding: 10px;
-text-align: center;
-margin-top: auto;
 
+html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+ .main{
+	 min-height: 100%;
+	 position: relative;
+ }
+.footer {
+background-color: #050c24;
+height: 50px;
+text-align: center;
+bottom: 0px;
+width: 100%;
+margin-left: auto;
+margin-right: auto;
+position: absolute;
+color: white;
 }
 
 </style>
 </head>
 
 <body>
+<div class="main">
+
+
 	{% include 'includes/_navbar.html' %}
 	<div class="container">
 		{% include 'includes/_messages.html' %}
 		{% block body %} {% endblock %}
-	</div>
 
-	<div class="container">
-	<div class="footer">
-	  <p>Footer</p>
-	</div>
+
+		</div>
+		<!-- <div class="footer">
+			<p> @2020 All Copy Rights Recrived</p>
+	</div> -->
+
 </div>
-
+<div class="footer">
+	<p> @2020 All Copy Rights Recrived</p>
+</div>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type=text/javascript> $SCRIPT_ROOT={{ request.script_root|tojson|safe }}; </script>
