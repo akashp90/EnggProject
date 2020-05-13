@@ -34,3 +34,10 @@ class algorithms(db.Model):
     DefaultAlgorithm = db.Column(db.Boolean,nullable=False, default=False)
     Accuracy = db.Column(db.String(20))
 
+class outbreak_analysis(db.Model):
+    __tablename__='outbreak_analysis'
+    id=db.Column(db.Integer,primary_key=True,autoincrement=True)
+    EntryTime = db.Column(db.DateTime)
+    CentreCode = db.Column(db.Integer)
+    Disease = db.Column(db.String(200))
+    OutbreakFlag = db.Column(db.Integer)

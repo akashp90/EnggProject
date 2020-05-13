@@ -44,7 +44,7 @@ class GenRep(Resource):
             generate_report(algo,'custom')
         else:
             generate_report()
-        return make_response(render_template('error.html', errormsg="Access Denied"),200,headers)
+        return make_response(redirect('/reports'),303,headers)
 
 class Algo(Resource):
     def get(self):
