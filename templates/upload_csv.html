@@ -1,7 +1,56 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<a href='/download_template'> Download template </a>
+
+
+<!-- <a href='/download_template'> Download template </a>
 
 <form method="POST" enctype=multipart/form-data> <input type=file name=file> <input type='submit' value='upload'>
-</form> {% endblock %}
+</form> -->
+
+<br>
+<div class="card" style="height:10rem";>
+<div class="card-body" style="background-color:#f8f9fa";>
+  <div class="row">
+
+  <div class="col-sm-6">
+
+
+ <h6> Health Centre ID:</h6>
+ <br>
+ <h6>District:</h6>
+   <br><br>
+   </div>
+   <div class="col-sm-6">
+   <h6>Logged In by:</h6>
+   <br>
+   <h6>Date :<script>document.write(new Date().getDate())</script>/ <script>document.write(new Date().getFullYear())</script></h6>
+    </div>
+</div>
+</div>
+</div><br><br>
+
+
+<div class="card" style="height:15rem";>
+    <div class="card-body" style="background-color:#f8f9fa";>
+      <!-- <div class="container" > -->
+  <h5>Download the template for data entry.</h5>
+  <h5 class="card-title"><a href='/download_template'> Download template </a></h5>
+  <br>
+  <h5>Please upload the file here.</h5>
+  <br>
+  <form method="POST" enctype=multipart/form-data> <input type=file name=file> <input type='submit' value='upload'>
+  </form>
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+ {% endblock %}
