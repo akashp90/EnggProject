@@ -12,7 +12,7 @@
         <div class="card-body">
           <h5 class="card-title">Welcome to Admin Panel.</h5>
           <br>
-          <h5>Logged in by:</h5>
+          <h5>Logged in by:{{username}}</h5>
           <br><br>
           <h5>Last updates report on: {{lastreport}}</h5>
 
@@ -27,6 +27,8 @@
           <h5 class="card-title">Click here to view reports</h5>
           <br><br>
           <button type="button" class="btn btn-info" onClick="window.location.href='/reports';">View Report</button>
+          <button type="button" class="btn btn-info" onClick="window.location.href='/coronavirus';">Coronavirus
+            section</button>
         </div>
       </div>
     </div>
@@ -54,7 +56,7 @@
             <!-- Modal body -->
             <div class="modal-body">
               <!-- FORM -->
-              <form action="#">
+              <form action="" method="POST">
 
                 <!-- District   -->
                 <div class="form-group">
@@ -79,16 +81,16 @@
                   <label for="cord">Coordinates</label>
                   <input type="text" class="form-control" id="cord" placeholder="Coordinates" name="cord" required />
                 </div>
-
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-info">Submit</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
             </form>
           </div>
 
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-info">Submit</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
+
 
         </div>
       </div>
