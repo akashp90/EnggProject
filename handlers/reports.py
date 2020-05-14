@@ -5,6 +5,7 @@ from datastore import db
 from datetime import datetime
 from handlers.generate_report import *
 from handlers.generate_prediction import *
+from handlers.generate_coronavirus_report import *
 
 class Reports(Resource):
     def get(self):
@@ -32,6 +33,8 @@ class Output(Resource):
         if("reports/" in path):
             print(path)
             return send_from_directory('',path)
+        elif("coronavirus_reports/" in path):
+            return send_from_directory('',path)
         else:
             return make_response(render_template('error.html', errormsg="Access Denied"),200,headers)
 
@@ -53,7 +56,11 @@ class Algo(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('commanderconsole.html',algolist=alist),200,headers)
 
-def generate_report(algorithm=None,launch_method='auto'):  
+def generate_report(algorithm=None,launch_method='auto'): 
+    if(algorithm=="Coronavirus"):
+        gen_pred(algorithm,launch_method)
+        gen_coronavirus_report(launch_method,algorithm)
+        return
     if (algorithm==None):
         al=algorithms.query.filter_by(DefaultAlgorithm=True).first()
         al=al.AlgorithmName
