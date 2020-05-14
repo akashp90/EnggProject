@@ -41,6 +41,9 @@ def get_table_in_html(input_filename):
     filename = 'coronavirus_reports/' + datetime.date.today().strftime("%Y-%m-%d") + '_00-00-00_' + 'coronavirus-table.html'
     with open(filename,'w') as file:
         file.write(state_table_html)
+    filename = 'static/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus-table.html'
+    with open(filename,'w') as file:
+        file.write(state_table_html)
     return
 
 
@@ -64,7 +67,7 @@ def calc_growthRate(values):
     return k
 
 
-def get_moving_average_growth_rate_and_prediction(input_filename, state='Karnataka'):
+def get_moving_average_growth_rate_and_prediction(input_filename, state_name='Karnataka'):
     india_covid_19 = pd.read_csv(input_filename)#1st problem
     india_covid_19['Date'] = pd.to_datetime(india_covid_19['Date'],dayfirst = True)
     all_state = list(india_covid_19['State/UnionTerritory'].unique())
@@ -121,6 +124,8 @@ def get_moving_average_growth_rate_and_prediction(input_filename, state='Karnata
     moving_average_fig = fig
     filename = 'coronavirus_reports/' + datetime.date.today().strftime("%Y-%m-%d") + '_00-00-00_' + 'coronavirus-MovingAverageGraph.png'
     moving_average_fig.savefig(filename)
+    filename = 'static/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus-MovingAverageGraph.png'
+    moving_average_fig.savefig(filename)
 
     fig = plt.figure(figsize= (25,17))
     plt.suptitle('Growth Rate in Top 15 States',fontsize = 20,y=1.0)
@@ -137,12 +142,13 @@ def get_moving_average_growth_rate_and_prediction(input_filename, state='Karnata
         k=k+1
     plt.tight_layout(pad=3.0)
 
-    # TODO include this in the return
     growth_rate_graph_fig = fig
     filename = 'coronavirus_reports/' + datetime.date.today().strftime("%Y-%m-%d") + '_00-00-00_' + 'coronavirus-GrowthRateGraph.png'
     growth_rate_graph_fig.savefig(filename)
+    filename = 'static/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus-GrowthRateGraph.png'
+    growth_rate_graph_fig.savefig(filename)
 
-    k = india_covid_19[india_covid_19['State/UnionTerritory']=='Karnataka'].iloc[:,[1,8]]
+    k = india_covid_19[india_covid_19['State/UnionTerritory']== state_name].iloc[:,[1,8]]
 
     data=k.values
     data=k
@@ -161,14 +167,20 @@ def get_moving_average_growth_rate_and_prediction(input_filename, state='Karnata
     fig = plt.figure(figsize= (15,10))
     plt.xlabel("Dates",fontsize = 20)
     plt.ylabel('Total cases',fontsize = 20)
-    plt.title("Predicted Values for the next 15 Days" , fontsize = 20)
+    plt.title("Predicted Values for the next 15 Days for " +state_name , fontsize = 20)
 
     plt.plot_date(y= pred,x= prediction_dates,linestyle ='dashed',color = '#ff9999',label = 'Predicted');
     plt.plot_date(y=data['Confirmed'],x=data['Date'],linestyle = '-',color = 'blue',label = 'Actual');
     plt.legend()
 
     prediction_fig = fig
+<<<<<<< HEAD
+    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus_Prediction_' + state_name +'.png'
+    prediction_fig.savefig(filename)
+    filename = 'static/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus_Prediction_' + state_name+ '.png'
+=======
     filename = 'coronavirus_reports/' + datetime.date.today().strftime("%Y-%m-%d") + '_00-00-00_' + 'coronavirus_Prediction.png'
+>>>>>>> 524ba54ae96043efe435f4438e33f107f430d02c
     prediction_fig.savefig(filename)
 
 def get_results(filename='covid_19_india.csv'):

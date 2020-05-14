@@ -10,3 +10,4 @@ from handlers.download_template import *
 from handlers.admin import *
 from handlers.generate_coronavirus_report import *
 from handlers.about import *
+from handlers.admin_login import AdminLogin

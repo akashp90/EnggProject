@@ -5,6 +5,35 @@
 
 <div class="container">
 
+<<<<<<< HEAD
+  <div class="row">
+    <!-- CARD 1 -->
+    <div class="col-sm-6">
+      <div class="card" style="height:20rem;">
+        <div class="card-body">
+          <h5 class="card-title">Welcome to Admin Panel.</h5>
+          <br>
+          <h5>Logged in by:{{username}}</h5>
+          <br><br>
+          <h5>Last updates report on: {{lastreport}}</h5>
+
+        </div>
+      </div>
+
+    </div>
+    <!-- CARD 2 -->
+    <div class="col-sm-6" style="background-color">
+      <div class="card" style="height:20rem;">
+        <div class="card-body">
+          <h5 class="card-title">Click here to view reports</h5>
+          <br><br>
+          <button type="button" class="btn btn-info" onClick="window.location.href='/reports';">View Report</button>
+          <button type="button" class="btn btn-info" onClick="window.location.href='/coronavirus';">Coronavirus
+            section</button>
+        </div>
+      </div>
+    </div>
+=======
 <div class="row">
 <!-- CARD 1 -->
   <div class="col-sm-6" >
@@ -19,6 +48,7 @@
  </div>
  </div>
 
+>>>>>>> 524ba54ae96043efe435f4438e33f107f430d02c
   </div>
   <!-- CARD 2 -->
   <div class="col-sm-6" style="background-color">
@@ -62,6 +92,46 @@
               <input type="text" class="form-control" id="district" placeholder="Enter District" name="district">
             </div>
 
+<<<<<<< HEAD
+            <!-- Modal body -->
+            <div class="modal-body">
+              <!-- FORM -->
+              <form action="" method="POST">
+
+                <!-- District   -->
+                <div class="form-group">
+                  <label for="district">District</label>
+                  <input type="text" class="form-control" id="district" placeholder="Enter District" name="district">
+                </div>
+
+                <!-- STATE -->
+                <div class="form-group">
+                  <label for="state">State</label>
+                  <input type="text" class="form-control" id="state" placeholder="Enter State" name="state">
+                </div>
+
+                <!-- COUNTRY -->
+                <div class="form-group">
+                  <label for="country">Country</label>
+                  <input type="text" class="form-control" id="country" placeholder="Country" name="country">
+                </div>
+
+                <!-- COORD -->
+                <div class="form-group">
+                  <label for="cord">Coordinates</label>
+                  <input type="text" class="form-control" id="cord" placeholder="Coordinates" name="cord" required />
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-info">Submit</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </form>
+          </div>
+
+
+=======
             <!-- STATE -->
           <div class="form-group">
           <label for="state">State</label>
@@ -79,6 +149,7 @@
           <label for="cord">Coordinates</label>
           <input type="text" class="form-control" id="cord" placeholder="Coordinates" name="cord" required/>
           </div>
+>>>>>>> 524ba54ae96043efe435f4438e33f107f430d02c
 
           
         

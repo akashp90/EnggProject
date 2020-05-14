@@ -5,6 +5,7 @@ from datastore import db
 from datetime import datetime
 from handlers.generate_report import *
 from handlers.generate_prediction import *
+from handlers.generate_coronavirus_report import *
 
 from handlers.corona import *
 from handlers.generate_coronavirus_report import *

@@ -46,7 +46,9 @@ def _init_routes():
     api.add_resource(Algo, "/algo", methods=["GET"])
     api.add_resource(DownloadTemplate, "/download_template", methods=["GET", "POST"])
     api.add_resource(Admin, "/admin", methods=["GET", "POST"])
+    api.add_resource(CoronavirusHandler, "/coronavirus", methods=["GET", "POST"])
     api.add_resource(About, "/about", methods=["GET"])
+    api.add_resource(AdminLogin, "/admin_login", methods=["GET","POST"])
 
 
 if __name__ == "__main__":
