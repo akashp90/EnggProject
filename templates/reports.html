@@ -14,7 +14,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Available Reports</h1>
+    <h3 style='margin-left:10px;'>Generate Reports</h3>
+    <button style='margin-left: 20px; border-radius: 4px;' onClick="window.location.href='/algo';">View Algorithms</button>
+    <br/><br/>
+    <h3 style='margin-left:10px;'>Available Reports</h3>
     {% if reports %}
     <table style="border:solid black 1px; margin:10px;"><tbody>
         <tr style="border:solid black 1px;padding:0px;"><th style="border:solid black 1px;padding:8px 16px 8px 16px; text-align: center;">Report Date</th><th style="border:solid black 1px;padding:8px 16px 8px 16px; text-align: center;">Report Link</th>
@@ -24,7 +27,7 @@
     {% endfor %}
     </tbody></table>
     {% else %}
-    <p style="padding:8px;font-size:20pt;">No reports available</p>
+    <p style="padding:8px;font-size:16pt;">No reports available</p>
     {% endif %}
 </body>    
 </html>

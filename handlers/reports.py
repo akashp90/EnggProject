@@ -34,6 +34,8 @@ class Output(Resource):
         if("reports/" in path):
             print(path)
             return send_from_directory('',path)
+        elif("coronavirus_reports/" in path):
+            return send_from_directory('',path)
         else:
             return make_response(render_template('error.html', errormsg="Access Denied"),200,headers)
 
@@ -46,7 +48,7 @@ class GenRep(Resource):
             generate_report(algo,'custom')
         else:
             generate_report()
-        return make_response(render_template('error.html', errormsg="Access Denied"),200,headers)
+        return make_response(redirect('/reports'),303,headers)
 
 class Algo(Resource):
     def get(self):
@@ -55,7 +57,11 @@ class Algo(Resource):
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('commanderconsole.html',algolist=alist),200,headers)
 
-def generate_report(algorithm=None,launch_method='auto'):  
+def generate_report(algorithm=None,launch_method='auto'): 
+    if(algorithm=="Coronavirus"):
+        gen_pred(algorithm,launch_method)
+        gen_coronavirus_report(launch_method,algorithm)
+        return
     if (algorithm==None):
         al=algorithms.query.filter_by(DefaultAlgorithm=True).first()
         al=al.AlgorithmName
@@ -71,15 +77,6 @@ def generate_report(algorithm=None,launch_method='auto'):
     gen_pred(al,launch_method)
     gen_report(launch_method,al)
 
-def generate_coronavirus_report():
-    table_in_html = get_table_in_html('covid_19_india.csv')
 
-    
-    moving_average_graph_figure = get_moving_average_graph('covid_19_india.csv')
-    moving_average_graph_figure.savefig('templates/MovingAverageGraph.png')
-    html_page = render_jinja_html('coronavirus_report_template.html',table_in_html=table_in_html, moving_average_graph_filename = "MovingAverageGraph.png")
-    with open('templates/corona_report.html','w') as file:
-        file.write(html_page)
-    
 
 
