@@ -1,11 +1,11 @@
 from flask_restful import Resource
-from flask import render_template, make_response, send_from_directory, redirect, request
+from flask import render_template, make_response, send_from_directory, redirect, request, Markup, render_template_string
 from models import PHCUser,medicaldata,reports,algorithms
 from datastore import db
 from datetime import datetime
 from handlers.generate_report import *
 from handlers.generate_prediction import *
-from handlers.generate_coronavirus_report import *
+
 
 class Reports(Resource):
     def get(self):
@@ -75,3 +75,7 @@ def generate_report(algorithm=None,launch_method='auto'):
         raise Exception("Algorithm does not exist")
     gen_pred(al,launch_method)
     gen_report(launch_method,al)
+
+
+
+

@@ -1,0 +1,8 @@
+{% block body %}
+<div class='table'>
+    {{table_in_html|safe}}
+</div>
+<div>
+    <img src="{{moving_average_graph_filename}}" alt="Moving average graph">
+</div>
+{% endblock %}
