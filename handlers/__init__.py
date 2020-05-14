@@ -12,3 +12,4 @@ from handlers.coronavirus_handler import *
 from handlers.corona import get_table_in_html, get_moving_average_graph
 from handlers.generate_html_jinja import render_jinja_html
 from handlers.generate_coronavirus_report import *
+from handlers.about import *

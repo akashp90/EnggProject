@@ -41,11 +41,13 @@ def _init_routes():
     api.add_resource(Logout, "/logout", methods=["GET"])
     api.add_resource(Reports, "/reports", methods=["GET"])
     api.add_resource(Output, "/output/<path:path>", methods=["GET"])
-    api.add_resource(GenRep, "/gen", methods=["GET"]) #Manual Report generation trigger
-    api.add_resource(Algo, "/algo", methods=["GET"])  #Generate report for non-default algorithms. Default is ARIMA
+    api.add_resource(GenRep, "/gen", methods=["GET"])  # Manual Report generation trigger
+    # Generate report for non-default algorithms. Default is ARIMA
+    api.add_resource(Algo, "/algo", methods=["GET"])
     api.add_resource(DownloadTemplate, "/download_template", methods=["GET", "POST"])
     api.add_resource(Admin, "/admin", methods=["GET", "POST"])
     api.add_resource(CoronavirusHandler, "/coronavirus", methods=["GET"])
+    api.add_resource(About, "/about", methods=["GET"])
 
 
 if __name__ == "__main__":
@@ -55,5 +57,5 @@ if __name__ == "__main__":
     scheduler.start()
     _init_routes()
     _init_db(app)
-    #app.run(debug=False,threaded=False)
+    # app.run(debug=False,threaded=False)
     app.run(debug=True)
