@@ -16,9 +16,11 @@ from statsmodels.tsa.arima_model import ARIMA
 
 
 from IPython.display import Image
+import datetime
 
 
 def get_table_in_html(input_filename):
+
     india_covid_19 = pd.read_csv(input_filename)#1st problem
     india_covid_19['Date'] = pd.to_datetime(india_covid_19['Date'],dayfirst = True)
 
@@ -36,7 +38,10 @@ def get_table_in_html(input_filename):
 
     #TODO use state_table_html in rendering in admin page
     state_table_html = state_table.render()
-    return state_table_html
+    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00_00_00_' + 'coronavirus-table.html'
+    with open(filename,'w') as file:
+        file.write(state_table_html)
+    return
 
 
 def calc_movingaverage(values ,N):    
@@ -48,7 +53,18 @@ def calc_movingaverage(values ,N):
             moving_aves.append(moving_ave)
     return moving_aves
 
-def get_moving_average_graph(input_filename):
+def calc_growthRate(values):
+    k = []
+    for i in range(1,len(values)):
+        summ = 0
+        for j in range(i):
+            summ = summ + values[j]
+        rate = (values[i]/summ)*100
+        k.append(float(rate))
+    return k
+
+
+def get_moving_average_growth_rate_and_prediction(input_filename, state='Karnataka'):
     india_covid_19 = pd.read_csv(input_filename)#1st problem
     india_covid_19['Date'] = pd.to_datetime(india_covid_19['Date'],dayfirst = True)
     all_state = list(india_covid_19['State/UnionTerritory'].unique())
@@ -101,65 +117,56 @@ def get_moving_average_graph(input_filename):
         k=k+1
     plt.tight_layout(pad=3.0)
 
-    return fig
+    #First output
+    moving_average_fig = fig
+    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00_00_00_' + 'coronavirus-moving_average.png'
+    moving_average_fig.savefig(filename)
 
+    fig = plt.figure(figsize= (25,17))
+    plt.suptitle('Growth Rate in Top 15 States',fontsize = 20,y=1.0)
+    k=0
+    for i in range(1,15):
+        ax = fig.add_subplot(5,3,i)
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%d-%b'))
+        #ax.bar(states_dates[states[k]],states_confirmed[states[k]],label = 'Day wise Confirmed Cases ') 
+        growth_rate = calc_growthRate(states_confirmed[states[k]])
+        ax.plot_date(states_dates[states[k]][21:],growth_rate[20:],color = '#9370db',label = 'Growth Rate',linewidth =3,linestyle='-')  
+        plt.title(states[k],fontsize = 20)
+        handles, labels = ax.get_legend_handles_labels()
+        fig.legend(handles, labels, loc='upper left')
+        k=k+1
+    plt.tight_layout(pad=3.0)
 
-"""
-def calc_growthRate(values):
-    k = []
-    for i in range(1,len(values)):
-        summ = 0
-        for j in range(i):
-            summ = summ + values[j]
-        rate = (values[i]/summ)*100
-        k.append(float(rate))
-    return k
+    # TODO include this in the return
+    growth_rate_graph_fig = fig
+    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00_00_00_' + 'coronavirus-growth_rate.png'
+    growth_rate_graph_fig.savefig(filename)
 
-fig = plt.figure(figsize= (25,17))
-plt.suptitle('Growth Rate in Top 15 States',fontsize = 20,y=1.0)
-k=0
-for i in range(1,15):
-    ax = fig.add_subplot(5,3,i)
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%d-%b'))
-    #ax.bar(states_dates[states[k]],states_confirmed[states[k]],label = 'Day wise Confirmed Cases ') 
-    growth_rate = calc_growthRate(states_confirmed[states[k]])
-    ax.plot_date(states_dates[states[k]][21:],growth_rate[20:],color = '#9370db',label = 'Growth Rate',linewidth =3,linestyle='-')  
-    plt.title(states[k],fontsize = 20)
-    handles, labels = ax.get_legend_handles_labels()
-    fig.legend(handles, labels, loc='upper left')
-    k=k+1
-plt.tight_layout(pad=3.0)
+    k = india_covid_19[india_covid_19['State/UnionTerritory']=='Karnataka'].iloc[:,[1,8]]
 
-# TODO include this in the return
-growth_rate_graph_fig = fig
-fig.savefig('GrowthRateGraph.png')
+    data=k.values
+    data=k
 
-k = india_covid_19[india_covid_19['State/UnionTerritory']=='Karnataka'].iloc[:,[1,8]]
+    arima = ARIMA(data['Confirmed'], order=(5, 1, 0))
+    arima = arima.fit(trend='c', full_output=True, disp=True)
+    forecast = arima.forecast(steps= 30)
+    pred = list(forecast[0])
 
-data=k.values
-data=k
+    start_date = data['Date'].max()
+    prediction_dates = []
+    for i in range(30):
+        date = start_date + datetime.timedelta(days=1)
+        prediction_dates.append(date)
+        start_date = date
+    fig = plt.figure(figsize= (15,10))
+    plt.xlabel("Dates",fontsize = 20)
+    plt.ylabel('Total cases',fontsize = 20)
+    plt.title("Predicted Values for the next 15 Days" , fontsize = 20)
 
-arima = ARIMA(data['Confirmed'], order=(5, 1, 0))
-arima = arima.fit(trend='c', full_output=True, disp=True)
-forecast = arima.forecast(steps= 30)
-pred = list(forecast[0])
+    plt.plot_date(y= pred,x= prediction_dates,linestyle ='dashed',color = '#ff9999',label = 'Predicted');
+    plt.plot_date(y=data['Confirmed'],x=data['Date'],linestyle = '-',color = 'blue',label = 'Actual');
+    plt.legend()
 
-start_date = data['Date'].max()
-prediction_dates = []
-for i in range(30):
-    date = start_date + datetime.timedelta(days=1)
-    prediction_dates.append(date)
-    start_date = date
-fig = plt.figure(figsize= (15,10))
-plt.xlabel("Dates",fontsize = 20)
-plt.ylabel('Total cases',fontsize = 20)
-plt.title("Predicted Values for the next 15 Days" , fontsize = 20)
-
-plt.plot_date(y= pred,x= prediction_dates,linestyle ='dashed',color = '#ff9999',label = 'Predicted');
-plt.plot_date(y=data['Confirmed'],x=data['Date'],linestyle = '-',color = 'blue',label = 'Actual');
-plt.legend()
-
-prediction_fig = fig
-fig.savefig('Prediction.png')
-
-"""
+    prediction_fig = fig
+    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00_00_00_' + 'coronavirus-prediction.png'
+    prediction_fig.savefig(filename)

@@ -22,14 +22,3 @@ def gen_coronavirus_report(launch_method,al):
     except FileExistsError as e:
         print("File Exists",e)
     print("Reports generated")
-
-def generate_coronavirus_report():
-    table_in_html = get_table_in_html('covid_19_india.csv')
-
-    
-    moving_average_graph_figure = get_moving_average_graph('covid_19_india.csv')
-    moving_average_graph_figure.savefig('templates/MovingAverageGraph.png')
-    html_page = render_jinja_html('coronavirus_report_template.html',table_in_html=table_in_html, moving_average_graph_filename = "MovingAverageGraph.png")
-    with open('templates/corona_report.html','w') as file:
-        file.write(html_page)
-    

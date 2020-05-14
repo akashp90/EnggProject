@@ -5,8 +5,7 @@ from datastore import db
 from datetime import datetime
 from handlers.generate_report import *
 from handlers.generate_prediction import *
-from handlers.corona import get_moving_average_graph, get_table_in_html
-from handlers.generate_html_jinja import render_jinja_html
+
 
 class Reports(Resource):
     def get(self):
