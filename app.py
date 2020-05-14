@@ -46,7 +46,10 @@ def _init_routes():
     api.add_resource(Algo, "/algo", methods=["GET"])
     api.add_resource(DownloadTemplate, "/download_template", methods=["GET", "POST"])
     api.add_resource(Admin, "/admin", methods=["GET", "POST"])
+<<<<<<< HEAD
     api.add_resource(CoronavirusHandler, "/coronavirus", methods=["GET", "POST"])
+=======
+>>>>>>> 524ba54ae96043efe435f4438e33f107f430d02c
     api.add_resource(About, "/about", methods=["GET"])
     api.add_resource(AdminLogin, "/admin_login", methods=["GET","POST"])
 
