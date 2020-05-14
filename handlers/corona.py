@@ -38,7 +38,7 @@ def get_table_in_html(input_filename):
 
     #TODO use state_table_html in rendering in admin page
     state_table_html = state_table.render()
-    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00_00_00_' + 'coronavirus-table.html'
+    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus-table.html'
     with open(filename,'w') as file:
         file.write(state_table_html)
     return
@@ -119,7 +119,7 @@ def get_moving_average_growth_rate_and_prediction(input_filename, state='Karnata
 
     #First output
     moving_average_fig = fig
-    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00_00_00_' + 'coronavirus-moving_average.png'
+    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus-MovingAverageGraph.png'
     moving_average_fig.savefig(filename)
 
     fig = plt.figure(figsize= (25,17))
@@ -139,7 +139,7 @@ def get_moving_average_growth_rate_and_prediction(input_filename, state='Karnata
 
     # TODO include this in the return
     growth_rate_graph_fig = fig
-    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00_00_00_' + 'coronavirus-growth_rate.png'
+    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus-GrowthRateGraph.png'
     growth_rate_graph_fig.savefig(filename)
 
     k = india_covid_19[india_covid_19['State/UnionTerritory']=='Karnataka'].iloc[:,[1,8]]
@@ -168,5 +168,5 @@ def get_moving_average_growth_rate_and_prediction(input_filename, state='Karnata
     plt.legend()
 
     prediction_fig = fig
-    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00_00_00_' + 'coronavirus-prediction.png'
+    filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus_Prediction.png'
     prediction_fig.savefig(filename)
