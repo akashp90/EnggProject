@@ -8,7 +8,5 @@ from handlers.logout import *
 from handlers.reports import *
 from handlers.download_template import *
 from handlers.admin import *
-from handlers.coronavirus_handler import *
-from handlers.generate_html_jinja import render_jinja_html
 from handlers.generate_coronavirus_report import *
 from handlers.about import *
