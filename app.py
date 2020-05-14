@@ -44,6 +44,7 @@ def _init_routes():
     api.add_resource(Algo, "/algo", methods=["GET"])  #Generate report for non-default algorithms. Default is ARIMA
     api.add_resource(DownloadTemplate, "/download_template", methods=["GET", "POST"])
     api.add_resource(Admin, "/admin", methods=["GET", "POST"])
+    api.add_resource(CoronavirusHandler, "/coronavirus", methods=["GET"])
 
 
 if __name__ == "__main__":

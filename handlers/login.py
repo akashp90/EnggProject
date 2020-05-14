@@ -25,4 +25,8 @@ class Login(Resource):
                 error = "Invalid credentials"
                 headers = {'Content-Type': 'text/html'}
                 return make_response(render_template("login.html", error=error),200,headers)
+        else:
+            error = "User not found"
+            headers = {'Content-type': 'text/html'}
+            return make_response(render_template('login.html', error=error), 200, headers)
 
