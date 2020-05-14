@@ -6,6 +6,8 @@ from datetime import datetime
 from handlers.generate_report import *
 from handlers.generate_prediction import *
 
+from handlers.corona import *
+from handlers.generate_coronavirus_report import *
 
 class Reports(Resource):
     def get(self):
@@ -52,15 +54,14 @@ class GenRep(Resource):
 class Algo(Resource):
     def get(self):
         list_algorithms=algorithms.query.order_by(algorithms.DefaultAlgorithm.desc(),algorithms.AlgorithmName.asc()).all()
-        alist=list_algorithms      
+        alist=[]
+        for i in list_algorithms:
+            if(i.AlgorithmName!="MLP"):
+                alist.append(i)
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('commanderconsole.html',algolist=alist),200,headers)
 
 def generate_report(algorithm=None,launch_method='auto'): 
-    if(algorithm=="Coronavirus"):
-        gen_pred(algorithm,launch_method)
-        gen_coronavirus_report(launch_method,algorithm)
-        return
     if (algorithm==None):
         al=algorithms.query.filter_by(DefaultAlgorithm=True).first()
         al=al.AlgorithmName
@@ -73,8 +74,13 @@ def generate_report(algorithm=None,launch_method='auto'):
             flag=1
     if(flag==0):
         raise Exception("Algorithm does not exist")
+        
     gen_pred(al,launch_method)
-    gen_report(launch_method,al)
+    gen_report(launch_method,al)    
+        
+    get_results()
+    gen_coronavirus_report(launch_method,algorithm)
+
 
 
 
