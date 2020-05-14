@@ -8,4 +8,4 @@ from handlers.logout import *
 from handlers.reports import *
 from handlers.download_template import *
 from handlers.admin import *
-
+from handlers.about import *
