@@ -50,12 +50,12 @@
          <h4 class="modal-title">Add New Centre</h4>
          <button type="button" class="close" data-dismiss="modal">&times;</button>
        </div>
-
+        
+          <form action="/admin" method="post"> 
        <!-- Modal body -->
        <div class="modal-body">
          <!-- FORM -->
-          <form action="#">
-
+           
             <!-- District   -->
             <div class="form-group">
               <label for="district">District</label>
@@ -80,16 +80,16 @@
           <input type="text" class="form-control" id="cord" placeholder="Coordinates" name="cord" required/>
           </div>
 
-          </div>
-        </form>
+          
+        
        </div>
 
        <!-- Modal footer -->
        <div class="modal-footer">
-           <button type="button" class="btn btn-info">Submit</button>
+           <button type="submit" class="btn btn-info">Submit</button>
          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
        </div>
-
+           </form>
      </div>
    </div>
  </div>

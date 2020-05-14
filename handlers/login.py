@@ -18,8 +18,11 @@ class Login(Resource):
             if sha256_crypt.verify(password_candidate, password):
                 session['logged_in'] = True
                 session['username'] = username
+                session['permissions'] = phc_user.permission
                 flash('You are now logged in!', 'success')
                 headers = {'Content-Type': 'text/html'}
+                if(phc_user.permission == "Admin"):
+                    return make_response(redirect('/admin'),200,headers)
                 return make_response(render_template("dashboard.html"),200,headers)
             else:
                 error = "Invalid credentials"
