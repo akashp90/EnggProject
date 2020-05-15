@@ -68,6 +68,7 @@ def calc_growthRate(values):
 
 
 def get_moving_average_growth_rate_and_prediction(input_filename, state_name='Karnataka'):
+    matplotlib.use('Agg')
     india_covid_19 = pd.read_csv(input_filename)#1st problem
     india_covid_19['Date'] = pd.to_datetime(india_covid_19['Date'],dayfirst = True)
     all_state = list(india_covid_19['State/UnionTerritory'].unique())
@@ -178,9 +179,6 @@ def get_moving_average_growth_rate_and_prediction(input_filename, state_name='Ka
     filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus_Prediction_' + state_name +'.png'
     prediction_fig.savefig(filename)
     filename = 'static/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus_Prediction_' + state_name+ '.png'
-
-    filename = 'coronavirus_reports/' + datetime.date.today().strftime("%Y-%m-%d") + '_00-00-00_' + 'coronavirus_Prediction.png'
-
     prediction_fig.savefig(filename)
 
 def get_results(filename='covid_19_india.csv'):

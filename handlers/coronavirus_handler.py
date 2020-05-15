@@ -30,8 +30,10 @@ class CoronavirusHandler(Resource):
             root_path = current_app.root_path
             filename = 'static/' + str(date.today()) + '_00-00-00_' + 'coronavirus_Prediction_' + state_name+ '.png'
             if not os.path.exists(root_path+'/'+filename):
+                print("Filename not found->", filename)
                 print("Report generating for the first time")
                 get_moving_average_growth_rate_and_prediction('covid_19_india.csv',state_name=state_name)
+            
             
             headers = {'Content-Type': 'text/html'}
             return make_response(render_template('state_coronavirus_pred.html', filename=filename))
