@@ -7,10 +7,12 @@ from flask import (
     flash,
     current_app,
     url_for,
+    session
 )
 from werkzeug.utils import secure_filename
 import os
 from handlers.dump_to_database import DumpToDatabase
+from models import PHCUser, Location
 import pandas as pd
 import csv
 
@@ -40,7 +42,13 @@ def validate_csv(file, filename, mandatory_column_names):
 class UploadCSV(Resource):
     def get(self):
         headers = {"Content-Type": "text/html"}
-        return make_response(render_template("upload_csv.html"), 200, headers)
+        username = session['username']
+        phc_user = PHCUser.query.filter_by(username=username).first()
+        location_id = phc_user.location
+        location = Location.query.filter_by(id=location_id).first()
+        district = location.district
+
+        return make_response(render_template("upload_csv.html",location_id=location_id,district=district,username=username), 200, headers)
 
     def post(self):
         if "file" not in request.files:
@@ -56,9 +64,14 @@ class UploadCSV(Resource):
             disease = filename.split('_')[0]
             mandatory_column_names = get_mandatory_column_names_for_disease(disease)
             if validate_csv(file, filename, mandatory_column_names):
-                DumpToDatabase.dump_to_database(
-                    filename, table_name=disease
-                )
+                try:
+                    DumpToDatabase.dump_to_database(
+                        filename, table_name=disease
+                    )
+                    flash("Saved to db successfully", "success")
+                except Exception as e:
+                    print("Exception->", e)
+                    flash("There was an error in saving to database, please check your file","danger")
                 return redirect(url_for("phcdashboard"))
             else:
                 flash("Column names in csv not correct", "danger")

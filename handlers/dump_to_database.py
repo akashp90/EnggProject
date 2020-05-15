@@ -49,7 +49,8 @@ class DumpToDatabase:
                 print(vals)
                 for i in vals:
                     #TODO validate data before saving
-                    diarrhea = Diarrhea(EntryTime = i[0], CentreCode= location, Age=i[1], NoOfCases=i[2])
+                    date_time_obj = datetime.strptime(i[0],"%d-%m-%Y")
+                    diarrhea = Diarrhea(EntryTime = date_time_obj, CentreCode= location, Age=i[1], NoOfCases=i[2])
                     db.session.add(diarrhea)
                     db.session.commit()
         else:
