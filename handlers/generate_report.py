@@ -10,10 +10,10 @@ def gen_report(launch_method='auto',al=None):
     dir=os.getcwd()
     if(launch_method=='auto'):
         currtime=datetime.strptime(datetime.now().strftime("%Y %m %d 00 00 00"),"%Y %m %d %H %M %S")
-        filename="""\\reports\\"""+currtime.strftime("%Y-%m-%d_00-00-00")+".html"
+        filename="""/reports/"""+currtime.strftime("%Y-%m-%d_00-00-00")+".html"
     else:
         currtime=datetime.strptime(datetime.now().strftime("%Y %m %d %H %M %S"),"%Y %m %d %H %M %S")
-        filename="""\\reports\\"""+currtime.strftime("%Y-%m-%d_%H-%M-%S")+"_custom.html"
+        filename="""/reports/"""+currtime.strftime("%Y-%m-%d_%H-%M-%S")+"_custom.html"
     dir=dir+filename
     print(dir)
     #delete and recombine databases
