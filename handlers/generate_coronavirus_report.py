@@ -8,6 +8,7 @@ from handlers.corona import get_table_in_html, get_moving_average_growth_rate_an
 def gen_coronavirus_report(launch_method,al):
     get_table_in_html('covid_19_india.csv')
     get_moving_average_growth_rate_and_prediction('covid_19_india.csv')
+    currtime=datetime.strptime(datetime.now().strftime("%Y %m %d 00 00 00"),"%Y %m %d %H %M %S")
     if(al==None):
         rep=reports(ReportTime=currtime,ReportLoc=filename1)
     else:

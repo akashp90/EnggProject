@@ -47,7 +47,8 @@ def gen_report(launch_method='auto',al=None):
     df8diffs={}
     for i in df83['Disease']:
         tempdiff=0
-        for j in range(len(df81.values)):
+        print("df81",df81.values)
+        for j in range(0,len(df81.values)-1):
             if(df81.values[j][0]==i):
                 tempdiff=df81.values[j][1]
                 break
@@ -103,7 +104,7 @@ def gen_report(launch_method='auto',al=None):
     df9diffs1={}
     for i in df83['Disease']:
         tempdiff=0
-        for j in range(len(df82.values)):
+        for j in range(len(df82.values)-1):
             if(df81.values[j][0]==i):
                 tempdiff=df82.values[j][1]
                 break
@@ -611,8 +612,8 @@ def gen_report(launch_method='auto',al=None):
             rep=reports(ReportTime=currtime,ReportLoc=filename)
         else:
             rep=reports(ReportTime=currtime,ReportLoc=filename,Algorithm=al)
-        #db.session.add(rep)
-        #db.session.commit()
+        db.session.add(rep)
+        db.session.commit()
     except FileExistsError as e:
         print("File Exists",e)
     print("Reports generated")
