@@ -5,7 +5,6 @@
 
 <div class="container">
 
-<<<<<<< HEAD
   <div class="row">
     <!-- CARD 1 -->
     <div class="col-sm-6">
@@ -33,139 +32,115 @@
         </div>
       </div>
     </div>
-=======
-<div class="row">
-<!-- CARD 1 -->
-  <div class="col-sm-6" >
-    <div class="card" style="height: 20rem; background:#f5f5f5">
-   <div class="card-body">
-     <h5 class="card-title">Welcome to Admin Panel.</h5>
-     <br>
-     <h5>Logged in by:</h5>
-       <br><br>
-       <h5>Last updated report on: {{lastreport}}</h5>
-
- </div>
- </div>
-
->>>>>>> 524ba54ae96043efe435f4438e33f107f430d02c
   </div>
-  <!-- CARD 2 -->
-  <div class="col-sm-6">
-    <div class="card" style="height: 20rem; background:#f5f5f5">
-   <div class="card-body">
-     <h5 class="card-title">Click here to view reports</h5>
-     <br><br>
-      <button type="button" class="btn btn-info" onClick="window.location.href='/reports';">View Report</button>
-   </div>
- </div>
-   </div>
+
 </div>
 
 <br>
 <!-- CARD 3 -->
-  <div class="card" style="height:8rem; background:#f5f5f5">
-     <div class="card-body">
-    <h5  class="card-title">Register new Health Centre.</h5>
+<div class="card" style="height:8rem; background:#f5f5f5">
+  <div class="card-body">
+    <h5 class="card-title">Register new Health Centre.</h5>
 
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Centre</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Centre</button>
 
- <!-- The Modal -->
- <div class="modal fade" id="myModal">
-   <div class="modal-dialog modal-lg">
-     <div class="modal-content">
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
 
-       <!-- Modal Header -->
-       <div class="modal-header">
-         <h4 class="modal-title">Add New Centre</h4>
-         <button type="button" class="close" data-dismiss="modal">&times;</button>
-       </div>
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Add New Centre</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
 
           <form action="/admin" method="post">
-       <!-- Modal body -->
-       <div class="modal-body">
-         <!-- FORM -->
-
-            <!-- District   -->
-            <div class="form-group">
-              <label for="district">District</label>
-              <input type="text" class="form-control" id="district" placeholder="Enter District" name="district">
-            </div>
-
-<<<<<<< HEAD
             <!-- Modal body -->
             <div class="modal-body">
               <!-- FORM -->
-              <form action="" method="POST">
 
-                <!-- District   -->
-                <div class="form-group">
-                  <label for="district">District</label>
-                  <input type="text" class="form-control" id="district" placeholder="Enter District" name="district">
+              <!-- District   -->
+              <div class="form-group">
+                <label for="district">District</label>
+                <input type="text" class="form-control" id="district" placeholder="Enter District" name="district">
+              </div>
+
+              <<<<<<< HEAD <!-- Modal body -->
+                <div class="modal-body">
+                  <!-- FORM -->
+                  <form action="" method="POST">
+
+                    <!-- District   -->
+                    <div class="form-group">
+                      <label for="district">District</label>
+                      <input type="text" class="form-control" id="district" placeholder="Enter District"
+                        name="district">
+                    </div>
+
+                    <!-- STATE -->
+                    <div class="form-group">
+                      <label for="state">State</label>
+                      <input type="text" class="form-control" id="state" placeholder="Enter State" name="state">
+                    </div>
+
+                    <!-- COUNTRY -->
+                    <div class="form-group">
+                      <label for="country">Country</label>
+                      <input type="text" class="form-control" id="country" placeholder="Country" name="country">
+                    </div>
+
+                    <!-- COORD -->
+                    <div class="form-group">
+                      <label for="cord">Coordinates</label>
+                      <input type="text" class="form-control" id="cord" placeholder="Coordinates" name="cord"
+                        required />
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-info">Submit</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
-
-                <!-- STATE -->
-                <div class="form-group">
-                  <label for="state">State</label>
-                  <input type="text" class="form-control" id="state" placeholder="Enter State" name="state">
-                </div>
-
-                <!-- COUNTRY -->
-                <div class="form-group">
-                  <label for="country">Country</label>
-                  <input type="text" class="form-control" id="country" placeholder="Country" name="country">
-                </div>
-
-                <!-- COORD -->
-                <div class="form-group">
-                  <label for="cord">Coordinates</label>
-                  <input type="text" class="form-control" id="cord" placeholder="Coordinates" name="cord" required />
-                </div>
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-info">Submit</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            </form>
-          </div>
+          </form>
+        </div>
 
 
-=======
-            <!-- STATE -->
-          <div class="form-group">
+        =======
+        <!-- STATE -->
+        <div class="form-group">
           <label for="state">State</label>
           <input type="text" class="form-control" id="state" placeholder="Enter State" name="state">
-          </div>
+        </div>
 
-          <!-- COUNTRY -->
-          <div class="form-group">
+        <!-- COUNTRY -->
+        <div class="form-group">
           <label for="country">Country</label>
           <input type="text" class="form-control" id="country" placeholder="Country" name="country">
-          </div>
+        </div>
 
-          <!-- COORD -->
-          <div class="form-group">
+        <!-- COORD -->
+        <div class="form-group">
           <label for="cord">Coordinates</label>
-          <input type="text" class="form-control" id="cord" placeholder="Coordinates" name="cord" required/>
-          </div>
->>>>>>> 524ba54ae96043efe435f4438e33f107f430d02c
+          <input type="text" class="form-control" id="cord" placeholder="Coordinates" name="cord" required />
+        </div>
+        >>>>>>> 524ba54ae96043efe435f4438e33f107f430d02c
 
 
 
-       </div>
+      </div>
 
-       <!-- Modal footer -->
-       <div class="modal-footer">
-           <button type="submit" class="btn btn-info">Submit</button>
-         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-       </div>
-           </form>
-     </div>
-   </div>
- </div>
-
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-info">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+    </div>
   </div>
+</div>
+
+</div>
 </div>
 
 
