@@ -174,13 +174,9 @@ def get_moving_average_growth_rate_and_prediction(input_filename, state_name='Ka
     plt.legend()
 
     prediction_fig = fig
-<<<<<<< HEAD
     filename = 'coronavirus_reports/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus_Prediction_' + state_name +'.png'
     prediction_fig.savefig(filename)
     filename = 'static/' + str(datetime.date.today()) + '_00-00-00_' + 'coronavirus_Prediction_' + state_name+ '.png'
-=======
-    filename = 'coronavirus_reports/' + datetime.date.today().strftime("%Y-%m-%d") + '_00-00-00_' + 'coronavirus_Prediction.png'
->>>>>>> 524ba54ae96043efe435f4438e33f107f430d02c
     prediction_fig.savefig(filename)
 
 def get_results(filename='covid_19_india.csv'):
