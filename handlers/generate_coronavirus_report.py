@@ -13,7 +13,7 @@ def gen_coronavirus_report(launch_method,al):
     filename1=os.getcwd()+filename
     try:
         fd=open(filename1,'w')
-        fd.write(render_template('corona_virus_report_template',reportdate=currtime.strftime("%Y-%m-%d_00-00-00")))
+        fd.write(render_template('corona_virus_report_template.html',reportdate=currtime.strftime("%Y-%m-%d_00-00-00")))
         fd.close()
         rep=reports(ReportTime=currtime,ReportLoc=filename,Algorithm="Coronavirus")
         db.session.add(rep)
