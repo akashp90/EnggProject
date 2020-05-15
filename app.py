@@ -59,4 +59,4 @@ if __name__ == "__main__":
     _init_routes()
     _init_db(app)
     # app.run(debug=False,threaded=False)
-    app.run(debug=True)
+    app.run(debug=True, host='127.0.0.1:80')
