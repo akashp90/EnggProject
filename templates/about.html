@@ -1,4 +1,55 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<br>
+<div class="card" style="font-family: sans-serif; background:#f5f5f5;">
+
+  <div class="container"><br>
+    <p> This web application provides predictions on some of the epidemic diseases based on previous occurrences.
+    The data is collected from various health centres and a Machine Learning model is used to generate accurate predictions.
+There are two main users of the application, Health care officers/officals and health workers like pharmacists, clerks etc.
+<br>   Following are the functionalities provided by this application. <br>
+<ul>
+  <h4>Home Page</h4>
+  <li>In Home Page the the users have to register themselves buy filling the appropriate fields required.</li>
+  <li>The administrators on successful login are taken to Admin Page, this page gives info about the name of admin
+    logged in, and the date of last generated report is available
+</li><br>
+  <h4>Admin Page</h4>
+<li>The admin is provided with the functionality to add a new Health Centre to database, and he can view the report
+   generated for a disease by prediction algorithms.</li>
+<li>Admin is responsible to provide the PHC workers with a unique Health Care ID generated for a specific Health Care Centre,
+   Using which the health workers are supposed to login.
+</li><br>
+  <h4>Health Centre Login Page</h4>
+  <li>    Health Workers like Pharmacists, Clerks and other staffs' are loged in using a USER ID, PASSword along with health centre ID.
+    They are expected to   enter the data related to patients in a CSV template file provided to them. They can download this template
+     to their computers, fill the sheet and then upload the same in a space provided.
+  </li>
+
+</ul>
+    </p>
+    <p></p>
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card" style="font-family: sans-serif; background:#f5f5f5; height:15rem;">
+
+
+
+    </div>
+  </div>
+  <div class="col-sm-6">
+  <div class="card" style="font-family: sans-serif; background:#f5f5f5; height:15rem;">
+
+
+
+  </div>
+  </div>
+</div>
+
+
 {% endblock %}
