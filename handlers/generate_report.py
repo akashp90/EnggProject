@@ -88,7 +88,7 @@ def gen_report(launch_method='auto',al=None):
     for i in df14vals:
         for j in df14vals[i]:
             print(i,j)
-            if(df14vals[i][j]>5):
+            if(df14vals[i][j]>6):
                 outbreakalerttext+=i+"-"+j+"; "
         
     
@@ -384,7 +384,8 @@ def gen_report(launch_method='auto',al=None):
     
     last8wk=currtime-timedelta(currtime.weekday())-timedelta(weeks=8,days=1)
     last8wkdt=[]
-    for i in range(0,56):
+    td=currtime-last8wk
+    for i in range(0,td.days):
         last8wkdt.append(last8wk+timedelta(days=i))
     
     dfmain=pd.DataFrame()
