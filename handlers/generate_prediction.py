@@ -7,8 +7,8 @@ def gen_pred(algorithm=None,launch_method='auto'):
     if(algorithm=="LSTM"):
         LSTM_Aditya(launch_method)
         MLP_Aditya(launch_method)
-    elif(algorithm=="ARIMA"):
-        ARIMA_Likhith()
+    elif(algorithm=="Coronavirus"):
+        pass #Handled elsewhere
     else:
         pass
     print("Predictions generated and stored")

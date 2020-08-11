@@ -83,8 +83,8 @@ def generate_report(algorithm=None,launch_method='auto'):
     gen_pred(al,launch_method)
     gen_report(launch_method,al)    
     
-    get_results()
-    gen_coronavirus_report(launch_method,algorithm)
+    #get_results()
+    #gen_coronavirus_report(launch_method,algorithm)
 
 
 
